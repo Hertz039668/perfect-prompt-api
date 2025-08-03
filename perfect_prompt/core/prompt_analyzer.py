@@ -75,13 +75,19 @@ class PromptAnalyzer:
             
             self.sentiment_analyzer = SentimentIntensityAnalyzer()
             
-            # Initialize semantic similarity model
-            self.semantic_model = pipeline(
-                "feature-extraction",
-                model="sentence-transformers/all-MiniLM-L6-v2"
-            )
+            # Initialize semantic similarity model (with fallback)
+            try:
+                self.semantic_model = pipeline(
+                    "feature-extraction",
+                    model="sentence-transformers/all-MiniLM-L6-v2"
+                )
+                logger.info("Semantic model initialized successfully")
+            except Exception as e:
+                logger.warning(f"Could not load semantic model: {e}")
+                logger.warning("Using fallback semantic analysis without transformers model")
+                self.semantic_model = None
             
-            logger.info("All models initialized successfully")
+            logger.info("Models initialized successfully")
             
         except Exception as e:
             logger.error(f"Error initializing models: {e}")
