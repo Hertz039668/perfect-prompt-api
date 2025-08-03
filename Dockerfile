@@ -19,6 +19,7 @@ RUN python -m spacy download en_core_web_sm
 # Copy application code
 COPY perfect_prompt/ ./perfect_prompt/
 COPY deploy/docker-entrypoint.sh .
+COPY deploy/privacy-policy.html ./deploy/
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app

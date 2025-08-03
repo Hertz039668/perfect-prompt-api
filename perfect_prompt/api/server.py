@@ -5,6 +5,7 @@ FastAPI server for Perfect Prompt optimization API.
 from fastapi import FastAPI, HTTPException, Depends, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import uvicorn
@@ -78,6 +79,7 @@ class APIInfoResponse(BaseModel):
     endpoints: List[str]
     strategies: List[str]
     features: List[str]
+    privacy_policy: str
 
 
 # Global components
@@ -169,6 +171,25 @@ async def health_check():
     )
 
 
+@app.get("/privacy", response_class=HTMLResponse)
+async def privacy_policy():
+    """Serve the privacy policy."""
+    try:
+        import os
+        # Get the path to the privacy policy file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        privacy_file_path = os.path.join(current_dir, "..", "..", "deploy", "privacy-policy.html")
+        
+        with open(privacy_file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        return content
+    except FileNotFoundError:
+        return HTMLResponse(
+            content="<h1>Privacy Policy</h1><p>Privacy policy not found. Please contact hant2953@gmail.com for information.</p>",
+            status_code=404
+        )
+
+
 @app.get("/api/v1/info", response_model=APIInfoResponse)
 async def get_api_info():
     """Get API information and capabilities."""
@@ -182,6 +203,7 @@ async def get_api_info():
             "/api/v1/batch-optimize",
             "/api/v1/compare",
             "/health",
+            "/privacy",
             "/api/v1/info"
         ],
         strategies=[
@@ -198,7 +220,8 @@ async def get_api_info():
             "Multiple Strategies",
             "Target Metrics",
             "API Integration"
-        ]
+        ],
+        privacy_policy="https://perfect-prompt-api-production.up.railway.app/privacy"
     )
 
 
