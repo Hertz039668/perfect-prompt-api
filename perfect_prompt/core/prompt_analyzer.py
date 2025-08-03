@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from loguru import logger
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
-from transformers import pipeline
 
 
 @dataclass
@@ -75,17 +74,9 @@ class PromptAnalyzer:
             
             self.sentiment_analyzer = SentimentIntensityAnalyzer()
             
-            # Initialize semantic similarity model (with fallback)
-            try:
-                self.semantic_model = pipeline(
-                    "feature-extraction",
-                    model="sentence-transformers/all-MiniLM-L6-v2"
-                )
-                logger.info("Semantic model initialized successfully")
-            except Exception as e:
-                logger.warning(f"Could not load semantic model: {e}")
-                logger.warning("Using fallback semantic analysis without transformers model")
-                self.semantic_model = None
+            # Skip semantic similarity model for production deployment
+            self.semantic_model = None
+            logger.info("Semantic model disabled for production deployment")
             
             logger.info("Models initialized successfully")
             
