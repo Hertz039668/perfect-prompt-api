@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://your-app.railway.app",
+      "url": "https://perfect-prompt-api-production.up.railway.app",
       "description": "Railway production server"
     }
   ],
