@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Perfect Prompt API",
-    "description": "AI-powered prompt optimization system that analyzes and improves prompts for better AI model performance",
+    "description": "AI-powered prompt optimization system that analyzes and improves prompts for better AI model performance. Privacy policy: https://perfect-prompt-api-production.up.railway.app/privacy",
     "version": "1.0.0"
   },
   "servers": [
@@ -196,6 +196,25 @@
                     "status": {"type": "string"},
                     "version": {"type": "string"}
                   }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/privacy": {
+      "get": {
+        "summary": "Privacy policy",
+        "description": "Returns the privacy policy for the Perfect Prompt API",
+        "operationId": "privacy_policy",
+        "responses": {
+          "200": {
+            "description": "Privacy policy HTML page",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
