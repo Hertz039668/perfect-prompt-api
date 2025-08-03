@@ -12,7 +12,13 @@ __email__ = "team@perfectprompt.ai"
 from .core.prompt_analyzer import PromptAnalyzer
 from .core.prompt_optimizer import PromptOptimizer
 from .models.prompt_model import PromptModel
-from .api.client import PerfectPromptClient
+
+# Only import client if aiohttp is available (optional dependency)
+try:
+    from .api.client import PerfectPromptClient
+except ImportError:
+    # Client not available in production environment
+    PerfectPromptClient = None
 
 __all__ = [
     "PromptAnalyzer",
