@@ -1,0 +1,202 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Perfect Prompt API",
+    "description": "AI-powered prompt optimization system that analyzes and improves prompts for better AI model performance",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://your-app.railway.app",
+      "description": "Railway production server"
+    }
+  ],
+  "paths": {
+    "/api/v1/analyze": {
+      "post": {
+        "summary": "Analyze prompt effectiveness",
+        "description": "Analyzes a prompt and returns detailed metrics including clarity, specificity, efficiency, and suggestions for improvement",
+        "operationId": "analyzePrompt",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "The prompt text to analyze"
+                  }
+                },
+                "required": ["prompt"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt analysis results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompt": {"type": "string"},
+                    "metrics": {
+                      "type": "object",
+                      "properties": {
+                        "clarity_score": {"type": "number"},
+                        "specificity_score": {"type": "number"},
+                        "efficiency_score": {"type": "number"},
+                        "readability_score": {"type": "number"}
+                      }
+                    },
+                    "suggestions": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
+                    "issues": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/optimize": {
+      "post": {
+        "summary": "Optimize a prompt",
+        "description": "Takes a prompt and optimization strategy to return an improved version",
+        "operationId": "optimizePrompt",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "The prompt text to optimize"
+                  },
+                  "strategy": {
+                    "type": "string",
+                    "enum": ["clarity_focused", "efficiency_focused", "comprehensive", "creative"],
+                    "description": "Optimization strategy to use",
+                    "default": "comprehensive"
+                  }
+                },
+                "required": ["prompt"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Optimized prompt result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "original_prompt": {"type": "string"},
+                    "optimized_prompt": {"type": "string"},
+                    "improvement_score": {"type": "number"},
+                    "strategy_used": {"type": "string"},
+                    "optimization_steps": {"type": "integer"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/compare": {
+      "post": {
+        "summary": "Compare multiple prompts",
+        "description": "Compares multiple prompts and returns the best one with detailed analysis",
+        "operationId": "comparePrompts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompts": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "List of prompts to compare"
+                  }
+                },
+                "required": ["prompts"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt comparison results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "best_prompt": {
+                      "type": "object",
+                      "properties": {
+                        "index": {"type": "integer"},
+                        "prompt": {"type": "string"},
+                        "overall_score": {"type": "number"}
+                      }
+                    },
+                    "detailed_results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "prompt": {"type": "string"},
+                          "metrics": {"type": "object"},
+                          "rank": {"type": "integer"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Returns API health status",
+        "operationId": "healthCheck",
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {"type": "string"},
+                    "version": {"type": "string"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

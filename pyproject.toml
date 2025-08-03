@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "perfect-prompt"
+version = "0.1.0"
+description = "AI-powered prompt optimization system for embedding in other AI models"
+authors = [
+    {name = "Perfect Prompt Team", email = "team@perfectprompt.ai"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+keywords = ["ai", "machine-learning", "prompt-optimization", "nlp", "prompt-engineering"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+]
+
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "spacy>=3.6.0",
+    "transformers>=4.30.0",
+    "torch>=2.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "requests>=2.31.0",
+    "nltk>=3.8.0",
+    "joblib>=1.3.0",
+    "python-dotenv>=1.0.0",
+    "loguru>=0.7.0",
+    "tenacity>=8.2.0",
+    "aiohttp>=3.8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+]
+viz = [
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+    "plotly>=5.15.0",
+]
+jupyter = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.25.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/perfect-prompt/perfect-prompt"
+Documentation = "https://perfect-prompt.readthedocs.io/"
+Repository = "https://github.com/perfect-prompt/perfect-prompt.git"
+Issues = "https://github.com/perfect-prompt/perfect-prompt/issues"
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "--cov=perfect_prompt --cov-report=term-missing --cov-report=html"
+
+[tool.coverage.run]
+source = ["perfect_prompt"]
+omit = ["*/tests/*", "*/venv/*", "*/__pycache__/*"]
