@@ -16,7 +16,7 @@
       "post": {
         "summary": "Analyze prompt effectiveness",
         "description": "Analyzes a prompt and returns detailed metrics including clarity, specificity, efficiency, and suggestions for improvement",
-        "operationId": "analyzePrompt",
+        "operationId": "analyze_prompt",
         "requestBody": {
           "required": true,
           "content": {
@@ -42,7 +42,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "success": {"type": "boolean"},
                     "prompt": {"type": "string"},
+                    "analysis": {"type": "object"},
+                    "suggestions": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
                     "metrics": {
                       "type": "object",
                       "properties": {
@@ -52,14 +58,7 @@
                         "readability_score": {"type": "number"}
                       }
                     },
-                    "suggestions": {
-                      "type": "array",
-                      "items": {"type": "string"}
-                    },
-                    "issues": {
-                      "type": "array",
-                      "items": {"type": "string"}
-                    }
+                    "error_message": {"type": "string"}
                   }
                 }
               }
@@ -72,7 +71,7 @@
       "post": {
         "summary": "Optimize a prompt",
         "description": "Takes a prompt and optimization strategy to return an improved version",
-        "operationId": "optimizePrompt",
+        "operationId": "optimize_prompt",
         "requestBody": {
           "required": true,
           "content": {
@@ -104,11 +103,17 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "success": {"type": "boolean"},
                     "original_prompt": {"type": "string"},
                     "optimized_prompt": {"type": "string"},
                     "improvement_score": {"type": "number"},
-                    "strategy_used": {"type": "string"},
-                    "optimization_steps": {"type": "integer"}
+                    "optimization_steps": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    },
+                    "analysis": {"type": "object"},
+                    "metrics": {"type": "object"},
+                    "error_message": {"type": "string"}
                   }
                 }
               }
@@ -121,7 +126,7 @@
       "post": {
         "summary": "Compare multiple prompts",
         "description": "Compares multiple prompts and returns the best one with detailed analysis",
-        "operationId": "comparePrompts",
+        "operationId": "compare_prompts",
         "requestBody": {
           "required": true,
           "content": {
@@ -179,7 +184,7 @@
       "get": {
         "summary": "Health check",
         "description": "Returns API health status",
-        "operationId": "healthCheck",
+        "operationId": "health_check",
         "responses": {
           "200": {
             "description": "API is healthy",
